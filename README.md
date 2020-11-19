@@ -5,4 +5,4 @@ If a function works on more than one project or lab, it will probably work in to
 You must download the module httpimport (https://pypi.org/project/httpimport/). Run the command `pip install httpimport` in your command line and you will be good to go.
 * httpimport documentation: https://github.com/operatorequals/httpimport
 
-## [a relative link](./demo-httpimport.ipynb)
+## [Demo](./demo-httpimport.ipynb)
