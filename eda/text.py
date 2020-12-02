@@ -1,5 +1,6 @@
 import re
 
+# Credit for this one goes to https://www.analyticsvidhya.com/blog/2020/04/beginners-guide-exploratory-data-analysis-text-data/
 # Dictionary of English Contractions
 contractions_dict = { "ain't": "are not","'s":" is","aren't": "are not",
                      "can't": "cannot","can't've": "cannot have",
@@ -44,6 +45,28 @@ contractions_re=re.compile('(%s)' % '|'.join(contractions_dict.keys()))
 
 # Function for expanding contractions
 def expand_contractions(text,contractions_dict=contractions_dict):
-  def replace(match):
-    return contractions_dict[match.group(0)]
-  return contractions_re.sub(replace, text)
+    def replace(match):
+        return contractions_dict[match.group(0)]
+    return contractions_re.sub(replace, text)
+
+def build_df(vectorized, cv):
+    return pd.DataFrame(vectorized.todense(), columns=cv.get_feature_names())
+
+def v_transform(col_name, df, stopwords=None, min_df=1, ngram_range=(1,1)):
+    '''Vectorize a given column. Return a dataframe.'''
+    cv = CountVectorizer(stop_words=stopwords, min_df=min_df, ngram_range=ngram_range)
+    cv.fit(df[col_name])
+    vectorized = cv.transform(df[col_name])
+    print(f'Shape:', vectorized.shape)
+    
+    return build_df(vectorized, cv)
+
+def plot_frequent(dfs, titles):
+    '''Takes two dataframes and plots them side by side.'''
+    f, ax = plt.subplots(1, 2, figsize=(20,6))
+    df[0].sum().sort_values(ascending=False).head(10).plot(kind='barh', ax=ax[0])
+    df[1].sum().sort_values(ascending=False).head(10).plot(kind='barh', ax=ax[1])
+
+    f.suptitle('Most Common Words', fontsize=24)
+    ax[0].title.set_text(titles[0])
+    ax[1].title.set_text(titles[1]);
