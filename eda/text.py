@@ -1,4 +1,7 @@
 import re
+import pandas as pd
+import matplotlibe.pyplot as plt
+from sklearn.feature_extraction.text import CountVectorizer
 
 # Credit for this one goes to https://www.analyticsvidhya.com/blog/2020/04/beginners-guide-exploratory-data-analysis-text-data/
 # Dictionary of English Contractions
@@ -40,17 +43,20 @@ contractions_dict = { "ain't": "are not","'s":" is","aren't": "are not",
                      "you'll": "you will","you'll've": "you will have", "you're": "you are",
                      "you've": "you have"}
 
-# Regular expression for finding contractions
-contractions_re=re.compile('(%s)' % '|'.join(contractions_dict.keys()))
 
 # Function for expanding contractions
 def expand_contractions(text,contractions_dict=contractions_dict):
+    # Regular expression for finding contractions
+    contractions_re=re.compile('(%s)' % '|'.join(contractions_dict.keys()))
+  
     def replace(match):
         return contractions_dict[match.group(0)]
     return contractions_re.sub(replace, text)
 
+
 def build_df(vectorized, cv):
     return pd.DataFrame(vectorized.todense(), columns=cv.get_feature_names())
+
 
 def v_transform(col_name, df, stopwords=None, min_df=1, ngram_range=(1,1)):
     '''Vectorize a given column. Return a dataframe.'''
@@ -60,6 +66,7 @@ def v_transform(col_name, df, stopwords=None, min_df=1, ngram_range=(1,1)):
     print(f'Shape:', vectorized.shape)
     
     return build_df(vectorized, cv)
+
 
 def plot_frequent(dfs, titles):
     '''Takes two dataframes and plots them side by side.'''
