@@ -71,8 +71,8 @@ def v_transform(col_name, df, stopwords=None, min_df=1, ngram_range=(1,1)):
 def plot_frequent(dfs, titles):
     '''Takes two dataframes and plots them side by side.'''
     f, ax = plt.subplots(1, 2, figsize=(20,6))
-    df[0].sum().sort_values(ascending=False).head(10).plot(kind='barh', ax=ax[0])
-    df[1].sum().sort_values(ascending=False).head(10).plot(kind='barh', ax=ax[1])
+    dfs[0].sum().sort_values(ascending=False).head(10).plot(kind='barh', ax=ax[0])
+    dfs[1].sum().sort_values(ascending=False).head(10).plot(kind='barh', ax=ax[1])
 
     f.suptitle('Most Common Words', fontsize=24)
     ax[0].title.set_text(titles[0])
