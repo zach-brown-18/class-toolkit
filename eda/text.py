@@ -1,6 +1,6 @@
 import re
 import pandas as pd
-import matplotlibe.pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 
 # Credit for this one goes to https://www.analyticsvidhya.com/blog/2020/04/beginners-guide-exploratory-data-analysis-text-data/
