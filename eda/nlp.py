@@ -44,8 +44,8 @@ contractions_dict = { "ain't": "are not","'s":" is","aren't": "are not",
                      "you've": "you have"}
 
 
-# Function for expanding contractions
 def expand_contractions(text,contractions_dict=contractions_dict):
+    '''Finds and expands contractions in a given string.'''
     # Regular expression for finding contractions
     contractions_re=re.compile('(%s)' % '|'.join(contractions_dict.keys()))
   
@@ -55,6 +55,7 @@ def expand_contractions(text,contractions_dict=contractions_dict):
 
 
 def build_df(vectorized, cv):
+    '''Returns a DataFrame from a sparse, vectorized matrix'''
     return pd.DataFrame(vectorized.todense(), columns=cv.get_feature_names())
 
 
