@@ -12,15 +12,22 @@ def format_column_titles(df):
 
     
 def get_str_column_names(df):
-    return [col for col in df.columns if type(df[col][0]) is str]  
+    return [col for col in df.columns if type(df[col][0]) is str]
+
+
+def get_num_column_names(df):
+    numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+    return df.select_dtypes(include=numerics).columns.to_list()
+
 
 def isnan(x):
     if x != x:
         return True
     return False
 
-def get_binary_columns(df):
-    '''Returns a list of column names for only binary columns'''
+
+def get_binary_column_names(df):
+    '''Returns a list of column names consisting of only binary columns'''
     cols = []
     for col in df:
         binary = len(df[col].unique()) == 2
